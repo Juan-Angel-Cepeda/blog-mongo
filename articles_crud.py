@@ -6,7 +6,11 @@ def create_article(title,date,text):
     users = blog_conection.Users
     
     new_article = {
-        
+        title:title,
+        date:date,
+        text:text
     }
+    
+    users.insert_one(new_article)
     
     
