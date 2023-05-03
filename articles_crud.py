@@ -1,16 +1,65 @@
 import pymongo as mongo
 
-def create_article(title,date,text):
+def create_article(title,date,text,user):
     conection = mongo.MongoClient("mongodb://localhost:27017")
     blog_conection = conection.blog
-    users = blog_conection.Users
-    
+    users = blog_conection.users
+    response = users.find_one({'user':user})
     new_article = {
-        title:title,
-        date:date,
-        text:text
+        'title': title,
+        'date': date,
+        'text': text
     }
+
+    if 'articles' in response:
+        response['articles'].append(new_article)
+    else:
+        response['articles'] = [new_article]
+    users.update_one({'user': user}, {'$set': response})
+    return
+
+
+def delete_article(title, user):
+    connection = mongo.MongoClient("mongodb://localhost:27017")
+    blog_connection = connection.blog
+    users = blog_connection.users
+    response = users.find_one({'user': user})
+
+    if 'articles' in response:
+        article_index = None
+        for index, article in enumerate(response['articles']):
+            if article['title'] == title:
+                article_index = index
+                break
+
+        if article_index is not None:
+            response['articles'].pop(article_index)
+            users.update_one({'user': user}, {'$set': response})
+            return 1
+        else:
+            print("Artículo no encontrado.")
+            return 0
+    else:
+        print("El usuario no tiene artículos.")
+        return 0
+
+
+def get_all_articles(user):
+    connection = mongo.MongoClient("mongodb://localhost:27017")
+    blog_connection = connection.blog
+    users = blog_connection.users
+    response = users.find_one({'user': user})
+    articles = []
+
+    if 'articles' in response:
+        if len(response['articles']) > 0:
+            articles = response['articles']
+        else:
+            print(f"El usuario {user} no tiene artículos.")
+    else:
+        print(f"El usuario {user} no tiene artículos.")
     
-    users.insert_one(new_article)
+    return articles
+
     
     

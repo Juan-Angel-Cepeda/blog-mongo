@@ -3,7 +3,7 @@ import pymongo as mongo
 def create_user(name,password):
     conection = mongo.MongoClient("mongodb://localhost:27017")   
     blog_conection = conection.blog
-    users = blog_conection.Users
+    users = blog_conection.users
     new_user = {
         'user':name,
         'password':password,
@@ -17,12 +17,16 @@ def create_user(name,password):
 def login(name,password):
     conection = mongo.MongoClient("mongodb://localhost:27017")   
     blog_conection = conection.blog
-    users = blog_conection.Users
+    users = blog_conection.users
+    response = users.find_one({'user':name})
+    userdb = response['user']
+    passworddb = response['password']
     
-    
-
-def sing_up(name,email):
-    conection = mongo.MongoClient("mongodb://localhost:27017")   
-    blog_conection = conection.blog
-    users = blog_conection.Users
+    print(response)
+    if name == userdb and password == passworddb:
+        return [userdb,passworddb]
+    else:
+        userdb = ""
+        passworddb = ""
+        return [userdb,passworddb]
     
