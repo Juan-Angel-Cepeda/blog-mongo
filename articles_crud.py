@@ -1,10 +1,14 @@
 import pymongo as mongo
+from datetime import datetime
 
-def create_article(title,date,text,user):
+def create_article(title,text,user):
     conection = mongo.MongoClient("mongodb://localhost:27017")
     blog_conection = conection.blog
     users = blog_conection.users
     response = users.find_one({'user':user})
+    now = datetime.now()
+    date = now.date()
+    date = str(date)
     new_article = {
         'title': title,
         'date': date,

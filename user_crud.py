@@ -18,15 +18,13 @@ def login(name,password):
     conection = mongo.MongoClient("mongodb://localhost:27017")   
     blog_conection = conection.blog
     users = blog_conection.users
-    response = users.find_one({'user':name})
-    userdb = response['user']
-    passworddb = response['password']
-    
-    print(response)
-    if name == userdb and password == passworddb:
-        return [userdb,passworddb]
-    else:
-        userdb = ""
-        passworddb = ""
-        return [userdb,passworddb]
+    try:
+        response = users.find_one({'user':name})
+        userdb = response['user']
+        passworddb = response['password']
+        conection.close()
+        if name == userdb and password == passworddb:
+            return True
+    except:
+            return False
     
