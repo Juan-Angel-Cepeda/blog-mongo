@@ -28,7 +28,6 @@ def create_article(title,text,user,tags,categories):
     users.update_one({'user': user}, {'$set': response})
     return
 
-
 def delete_article(title, user):
     
     connection = mongo.MongoClient("mongodb://localhost:27017")
@@ -54,7 +53,6 @@ def delete_article(title, user):
         print("El usuario no tiene artículos.")
         return 0
 
-
 def get_all_articles():
     
     connection = mongo.MongoClient("mongodb://localhost:27017")
@@ -71,8 +69,7 @@ def get_all_articles():
                 article["username"] = username
                 all_articles.append(article)
                 
-    return all_articles
-    
+    return all_articles    
 
 def get_all_articles_from_a_user(user):
     connection = mongo.MongoClient("mongodb://localhost:27017")
