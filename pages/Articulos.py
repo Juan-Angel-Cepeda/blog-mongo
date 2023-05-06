@@ -1,5 +1,6 @@
 import streamlit as st
 import articles_crud as artcrud
+import comments_crud as commcrud
 
 st.title('Articulos')
 number_of_articles = len(artcrud.get_all_articles())
@@ -32,3 +33,6 @@ for i, article in enumerate(all_articles):
                 st.markdown(f"- {comment}")
         else:
             st.markdown("No hay comentarios.")
+
+
+    
