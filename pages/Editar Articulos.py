@@ -16,8 +16,8 @@ password = st.text_input('Ingresa tu contraseña')
 titulo_articulo = st.text_input('Titulo del articulo')
 new_titulo = st.text_input('Nuevo titulo del articulo',disabled=disable)
 texto_articulo = st.text_input('Nuevo texto del articulo',disabled=disable)
-tags_articulo = st.text_input('Tags del articulo',disabled=disable)
-categories_articulo = st.text_input('Tags del articulo',disable=disable)
+tags_articulo = st.text_input('Tags del articulo, separados por comas',disabled=disable)
+categories_articulo = st.text_input('Categorias del articulo, separadas por comas',disabled=disable)
 
 boton_opcion = st.button(option)
 
@@ -28,9 +28,18 @@ if option == 'Eliminar Articulo' and ucrud.login(user,password):
     try:
         st.success(artcrud.delete_article(user,titulo_articulo))
     except:
-        pass
+        st.error('Articulo no eliminado')
 elif option == 'Editar Articulo' and ucrud.login(user,password):
-    pass
+    try:
+        st.success(artcrud.editar_articulo(
+            user,
+            titulo_articulo,
+            new_titulo,
+            texto_articulo,
+            tags_articulo,
+            categories_articulo))
+    except:
+        st.error('Articulo no actualizado')
         
 else:
     st.error('Usuario o contraseña incorrectos')

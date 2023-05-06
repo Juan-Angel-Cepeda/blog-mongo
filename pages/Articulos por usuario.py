@@ -1,7 +1,7 @@
 import streamlit as st
 import articles_crud as artcrud
 
-st.title(f'Articles por usuario')
+st.title(f'Articulos por usuario')
 
 user = st.text_input("Busca los articulos de un usuario")
 buscar = st.button('Buscar articulos')
@@ -35,7 +35,7 @@ if buscar:
                 st.markdown("##### Tags:")
                 tags_string = ", ".join(article['tags'])
                 st.markdown(tags_string)
-        
+
                 st.markdown("##### Categorías:")
                 category_sring = ", ".join(article["categories"])
                 st.markdown(category_sring)

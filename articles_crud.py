@@ -105,6 +105,26 @@ def delete_article(user,title):
     else:
         return "Articulo no encontrado"
     
-def editar_articulo(user,title,text,tags,categories):
-    pass
+def editar_articulo(user,old_title,new_title,text,tags,categories):
+    conection = mongo.MongoClient("mongodb://localhost:27017")
+    blog_conection = conection.blog
+    users = blog_conection.users
+    response = users.find_one({'user': user})
+
+    if 'articles' in response:
+        articles = response['articles']
+        for article in articles:
+            if article.get('title') == old_title:
+                article['title'] = new_title
+                article['text'] = text
+                article['tags'] = tags.split(',')
+                article['categories'] = categories.split(',')
+                break
+        else:
+            print("No se encontró el artículo con el título especificado.")
+    else:
+        print(f"El usuario {user} no tiene artículos.")
+
+    users.update_one({'user': user}, {'$set': response})
+    return
     
