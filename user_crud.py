@@ -8,7 +8,7 @@ def create_user(name,password):
         'user':name,
         'password':password,
         'articles':[{}],
-        'coments':[{}]
+        'coments':[]
     }
     users.insert_one(new_user)
     conection.close()

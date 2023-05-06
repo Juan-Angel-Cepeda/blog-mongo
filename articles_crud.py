@@ -24,6 +24,7 @@ def create_article(title,text,user):
 
 
 def delete_article(title, user):
+    
     connection = mongo.MongoClient("mongodb://localhost:27017")
     blog_connection = connection.blog
     users = blog_connection.users
@@ -48,7 +49,26 @@ def delete_article(title, user):
         return 0
 
 
-def get_all_articles(user):
+def get_all_articles():
+    
+    connection = mongo.MongoClient("mongodb://localhost:27017")
+    blog_connection = connection.blog
+    users = blog_connection.users
+    all_users = users.find()
+    
+    all_articles = []
+    for user in all_users:
+        username = user.get("user")
+        articles = user.get("articles",[])
+        for article in articles:
+            if article:
+                article["username"] = username
+                all_articles.append(article)
+                
+    return all_articles
+    
+
+def get_all_articles_from_a_user(user):
     connection = mongo.MongoClient("mongodb://localhost:27017")
     blog_connection = connection.blog
     users = blog_connection.users
@@ -64,6 +84,7 @@ def get_all_articles(user):
         print(f"El usuario {user} no tiene artículos.")
     
     return articles
+
 
     
     
