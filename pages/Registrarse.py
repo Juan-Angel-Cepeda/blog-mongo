@@ -1,7 +1,7 @@
 import streamlit as st
 import user_crud as uscrud
 
-st.title("Sing-Up")
+st.title("Registrarse")
 st.divider()
 
 user_sp = st.text_input('User')

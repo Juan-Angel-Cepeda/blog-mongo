@@ -14,11 +14,7 @@ all_articles = artcrud.get_all_articles()
 for i, article in enumerate(all_articles):
     with containers[i]:
         st.divider()
+        st.markdown(f'## {article["title"]}')
+        st.markdown(f'{article["text"]}')
         st.markdown(f"**Autor:** {article['username']}")
         st.markdown(f"**Fecha:** {article['date']}")
-        st.subheader(article["title"])
-        st.text(article["text"])
-    
-
-
-#containers = st.container(number_of_containers)

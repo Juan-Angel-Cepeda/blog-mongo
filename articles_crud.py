@@ -72,19 +72,22 @@ def get_all_articles_from_a_user(user):
     connection = mongo.MongoClient("mongodb://localhost:27017")
     blog_connection = connection.blog
     users = blog_connection.users
-    response = users.find_one({'user': user})
+    response = users.find({'user': user})
     articles = []
+    for doc in response:
+        articles.append(doc)
 
-    if 'articles' in response:
-        if len(response['articles']) > 0:
-            articles = response['articles']
-        else:
-            print(f"El usuario {user} no tiene artículos.")
-    else:
-        print(f"El usuario {user} no tiene artículos.")
-    
+    """
+    for document in response:
+        if 'articles' in document:
+            if len(document['articles']) > 0:
+                for article in document['articles']:
+                    article["username"] = user  # Agrega el nombre de usuario al artículo
+                    articles.append(article)
+    """
     return articles
 
-
+get_all_articles_from_a_user('angel')
+    
     
     
