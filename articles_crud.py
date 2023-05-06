@@ -1,7 +1,7 @@
 import pymongo as mongo
 from datetime import datetime
 
-def create_article(title,text,user):
+def create_article(title,text,user,tags,categories):
     conection = mongo.MongoClient("mongodb://localhost:27017")
     blog_conection = conection.blog
     users = blog_conection.users
@@ -9,10 +9,16 @@ def create_article(title,text,user):
     now = datetime.now()
     date = now.date()
     date = str(date)
+    tags_list = tags.split(',')
+    categories_list = categories.split(',')
+    
     new_article = {
         'title': title,
         'date': date,
-        'text': text
+        'text': text,
+        'categories':categories_list,
+        'comments':[],
+        'tags':tags_list
     }
 
     if 'articles' in response:
@@ -76,18 +82,29 @@ def get_all_articles_from_a_user(user):
     articles = []
     for doc in response:
         articles.append(doc)
-
-    """
-    for document in response:
-        if 'articles' in document:
-            if len(document['articles']) > 0:
-                for article in document['articles']:
-                    article["username"] = user  # Agrega el nombre de usuario al artículo
-                    articles.append(article)
-    """
+    
     return articles
 
-get_all_articles_from_a_user('angel')
+def delete_article(user,title):
+    conection = mongo.MongoClient("mongodb://localhost:27017")
+    blog_conection = conection.blog
+    users = blog_conection.users
+    response = users.find_one({'user':user})
+    articles = response["articles"]
+
+    article_index = -1
+    for i, art in enumerate(articles):
+        if art.get('title') == title:
+            article_index = i
+            break
+        
+    if article_index != -1:
+        articles.pop(article_index)
+        users.update_one({'user': user}, {'$set': {'articles': articles}})
+        return "Articulo eliminado"
+    else:
+        return "Articulo no encontrado"
     
-    
+def editar_articulo(user,title,text,tags,categories):
+    pass
     

@@ -8,6 +8,10 @@ st.markdown('#### Para crear un articulo deberas ingresar usuario y contraseña'
 
 title = st.text_input('Ingresa el titulo del articulo')
 text = st.text_input('Intresa el texto de tu articulo')
+
+tags = st.text_input('Ingresa los tags del articulo, separados por comas')
+categories = st.text_input('Ingresa una categoria, separadas por comas')
+
 user = st.text_input('Usuario')
 password = st.text_input('Contraseña')
 
@@ -17,7 +21,7 @@ if not crear_articulo:
 
 if crear_articulo and ucrud.login(user,password):
     try:
-        artcrud.create_article(title,text,user)
+        artcrud.create_article(title,text,user,tags,categories)
         st.success('Articulo creado')
     except:
         st.error('Articulo no creado')
