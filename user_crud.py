@@ -12,7 +12,7 @@ def create_user(name,password):
     hash_password = hashlib.sha256(password.encode()).hexdigest()
     new_user = {
         'user':name,
-        'password':password,
+        'password':hash_password,
         'articles':[]
     }
     users.insert_one(new_user)
