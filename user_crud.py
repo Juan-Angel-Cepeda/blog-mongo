@@ -45,7 +45,11 @@ def delete_user(user,password):
     hash_passworddb = response['password']
     hash_password = hashlib.sha256(password.encode()).hexdigest()
     if user == userdb and hash_password == hash_passworddb:
-        users.delete_one({'user':user})    
+        users.delete_one({'user':user}) 
+        conection.close()   
         return 'Usuario eliminado'
+    else:
+        conection.close()
+        return 'Usuario o contraseña incorrectas'
 
         
