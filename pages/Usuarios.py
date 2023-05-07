@@ -20,7 +20,7 @@ with containerSing:
 with containerDel:
     st.subheader('Elimina tu usuario')
     user_del = st.text_input('Nombre de usuario')
-    password_del = st.text_input('Contraseña',type='password')
+    password_del = st.text_input('Contraseña',type='password',key=1)
     del_button = st.button('Eliminame')
     if del_button:
         try:
