@@ -1,7 +1,7 @@
 import streamlit as st
 import comments_crud as commcrud
 
-st.markdown('### Añadir comentarios')
+st.markdown('# Añadir comentarios')
 
 
 titulo = st.text_input('Titulo del articulo a comentar')
