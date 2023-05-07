@@ -23,10 +23,8 @@ with containerDel:
     password_del = st.text_input('Contraseña',type='password',key=1)
     del_button = st.button('Eliminame')
     if del_button:
-        try:
-            st.succes(uscrud.delete_user(user_del,password_del))
-        except:
-            st.error('Error')
+        st.succes(uscrud.delete_user(user_del,password_del))
+        
             
             
     
