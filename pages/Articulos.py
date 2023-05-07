@@ -15,7 +15,7 @@ for i, article in enumerate(all_articles):
     with containers[i]:
         st.divider()
         st.markdown(f'## {article["title"]}')
-        st.markdown(f'### {article["text"]}')
+        st.markdown(f'{article["text"]}')
         st.markdown(f"**Autor:** {article['username']}")
         st.markdown(f"**Fecha:** {article['date']}")
         st.markdown("##### Tags:")
