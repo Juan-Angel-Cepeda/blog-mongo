@@ -3,7 +3,8 @@ import user_crud as uscrud
 
 st.title("Usuarios")
 st.divider()
-containerSing,containerDel = st.container(2)
+containerSing = st.container()
+containerDel = st.container()
 
 with containerSing:
     st.subheader('Crea tu usuario')
