@@ -18,10 +18,7 @@ def save_coment(comentario,articulo,user_comentando,password_usuario_comentado):
         for user in all_users:
             for i, article in enumerate(user["articles"]):
                 if article["title"] == articulo:
-                    # Agrega el comentario al artículo
                     user["articles"][i]["comments"].append(comentario_a_guardar)
-                    
-                    # Actualiza el documento del usuario en la base de datos
                     users.update_one({'user': user["user"]}, {'$set': user})
                     article_found = True
                     break
