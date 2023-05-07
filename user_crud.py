@@ -34,3 +34,18 @@ def login(name,password):
     except:
             return False
     
+
+def delete_user(user,password):
+    conection = MongoClient(uri, server_api=ServerApi('1'))
+    blog_conection = conection.blog
+    users = blog_conection.users
+    
+    response = users.find_one({'user':user})
+    userdb = response['user']
+    hash_passworddb = response['password']
+    hash_password = hashlib.sha256(password.encode()).hexdigest()
+    if user == userdb and hash_password == hash_passworddb:
+        users.delete_one({'user':user})    
+        return 'Usuario eliminado'
+
+        

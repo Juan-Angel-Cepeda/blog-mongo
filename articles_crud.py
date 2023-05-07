@@ -13,8 +13,8 @@ def create_article(title,text,user,tags,categories):
     now = datetime.now()
     date = now.date()
     date = str(date)
-    tags_list = tags.split(',')
-    categories_list = categories.split(',')
+    tags_list = tags.split(', ')
+    categories_list = categories.split(', ')
     
     new_article = {
         'title': title,
@@ -117,6 +117,7 @@ def editar_articulo(user,old_title,new_title,text,tags,categories):
     blog_conection = conection.blog
     users = blog_conection.users
     response = users.find_one({'user': user})
+    
 
     if 'articles' in response:
         articles = response['articles']
@@ -131,11 +132,11 @@ def editar_articulo(user,old_title,new_title,text,tags,categories):
                 else:
                     article['text'] = article.get('text')
                 if tags != "":
-                    article['tags'] = tags.split(',')
+                    article['tags'] = tags.split(', ')
                 else:
                     article['tags'] = article.get('tags')
                 if categories != "":
-                    article['categories'] = categories.split(',')
+                    article['categories'] = categories.split(', ')
                 else:
                     article['categories'] = article.get('categories')
                 break
