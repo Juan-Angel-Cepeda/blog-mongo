@@ -5,7 +5,7 @@ st.title("Registrarse")
 st.divider()
 
 user_sp = st.text_input('Usuario')
-password_sp = st.text_input('Contraseña')
+password_sp = st.text_input('Contraseña',type='password')
 sing_up = st.button("Registrarse")
 if sing_up:
     try:

@@ -124,12 +124,20 @@ def editar_articulo(user,old_title,new_title,text,tags,categories):
             if article.get('title') == old_title:
                 if new_title != "":
                     article['title'] = new_title
+                else:
+                    article['title'] = article.get('title')
                 if text != "":
                     article['text'] = text
+                else:
+                    article['text'] = article.get('text')
                 if tags != "":
                     article['tags'] = tags.split(',')
+                else:
+                    article['tags'] = article.get('tags')
                 if categories != "":
                     article['categories'] = categories.split(',')
+                else:
+                    article['categories'] = article.get('categories')
                 break
         else:
             conection.close()

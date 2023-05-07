@@ -13,7 +13,7 @@ tags = st.text_input('Ingresa los tags del articulo, separados por comas')
 categories = st.text_input('Ingresa una categoria, separadas por comas')
 
 user = st.text_input('Usuario')
-password = st.text_input('Contraseña')
+password = st.text_input('Contraseña',type='password')
 
 crear_articulo = st.button('Crear')
 if not crear_articulo:

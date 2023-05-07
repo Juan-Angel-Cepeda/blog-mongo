@@ -12,7 +12,7 @@ else:
     disable = False
 
 user = st.text_input('Ingresa tu usuario')
-password = st.text_input('Ingresa tu contraseña')
+password = st.text_input('Ingresa tu contraseña',type='password')
 titulo_articulo = st.text_input('Titulo del articulo')
 new_titulo = st.text_input('Nuevo titulo del articulo',disabled=disable)
 texto_articulo = st.text_input('Nuevo texto del articulo',disabled=disable)
