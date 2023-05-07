@@ -1,7 +1,11 @@
-import pymongo as mongo
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import streamlit as st
+
+uri = st.secrets["DB_MONGO_URI"]
 
 def find_articles_by_categories(category):
-    connection = mongo.MongoClient("mongodb://localhost:27017")
+    connection = MongoClient(uri, server_api=ServerApi('1'))
     blog_connection = connection.blog
     users = blog_connection.users
     all_users = users.find()

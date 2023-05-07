@@ -1,7 +1,11 @@
-import pymongo as mongo
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import streamlit as st
+
+uri = st.secrets["DB_MONGO_URI"]
 
 def create_user(name,password):
-    conection = mongo.MongoClient("mongodb://localhost:27017")   
+    conection = MongoClient(uri, server_api=ServerApi('1'))
     blog_conection = conection.blog
     users = blog_conection.users
     new_user = {
@@ -14,7 +18,7 @@ def create_user(name,password):
     return
 
 def login(name,password):
-    conection = mongo.MongoClient("mongodb://localhost:27017")   
+    conection = MongoClient(uri, server_api=ServerApi('1'))
     blog_conection = conection.blog
     users = blog_conection.users
     try:

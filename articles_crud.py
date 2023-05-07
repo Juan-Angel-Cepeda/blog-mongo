@@ -1,8 +1,12 @@
-import pymongo as mongo
 from datetime import datetime
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import streamlit as st
+
+uri = st.secrets["DB_MONGO_URI"]
 
 def create_article(title,text,user,tags,categories):
-    conection = mongo.MongoClient("mongodb://localhost:27017")
+    conection = MongoClient(uri, server_api=ServerApi('1'))
     blog_conection = conection.blog
     users = blog_conection.users
     response = users.find_one({'user':user})
@@ -26,11 +30,12 @@ def create_article(title,text,user,tags,categories):
     else:
         response['articles'] = [new_article]
     users.update_one({'user': user}, {'$set': response})
+    conection.close()
     return
 
 def delete_article(title, user):
     
-    connection = mongo.MongoClient("mongodb://localhost:27017")
+    connection = MongoClient(uri, server_api=ServerApi('1'))
     blog_connection = connection.blog
     users = blog_connection.users
     response = users.find_one({'user': user})
@@ -45,17 +50,18 @@ def delete_article(title, user):
         if article_index is not None:
             response['articles'].pop(article_index)
             users.update_one({'user': user}, {'$set': response})
-            return 1
+            connection.close()
+            return "Articulo eliminado"
         else:
-            print("Artículo no encontrado.")
-            return 0
+            connection.close()
+            return "Articulo no encontrado"
     else:
-        print("El usuario no tiene artículos.")
-        return 0
+        connection.close()
+        return "El usuario no tiene articulos"
 
 def get_all_articles():
     
-    connection = mongo.MongoClient("mongodb://localhost:27017")
+    connection = MongoClient(uri, server_api=ServerApi('1'))
     blog_connection = connection.blog
     users = blog_connection.users
     all_users = users.find()
@@ -68,11 +74,12 @@ def get_all_articles():
             if article:
                 article["username"] = username
                 all_articles.append(article)
-                
+    
+    connection.close()
     return all_articles    
 
 def get_all_articles_from_a_user(user):
-    connection = mongo.MongoClient("mongodb://localhost:27017")
+    connection = MongoClient(uri, server_api=ServerApi('1'))
     blog_connection = connection.blog
     users = blog_connection.users
     response = users.find({'user': user})
@@ -80,10 +87,11 @@ def get_all_articles_from_a_user(user):
     for doc in response:
         articles.append(doc)
     
+    connection.close()
     return articles
 
 def delete_article(user,title):
-    conection = mongo.MongoClient("mongodb://localhost:27017")
+    conection = MongoClient(uri, server_api=ServerApi('1'))
     blog_conection = conection.blog
     users = blog_conection.users
     response = users.find_one({'user':user})
@@ -98,12 +106,14 @@ def delete_article(user,title):
     if article_index != -1:
         articles.pop(article_index)
         users.update_one({'user': user}, {'$set': {'articles': articles}})
+        conection.close()
         return "Articulo eliminado"
     else:
+        conection.close()
         return "Articulo no encontrado"
     
 def editar_articulo(user,old_title,new_title,text,tags,categories):
-    conection = mongo.MongoClient("mongodb://localhost:27017")
+    conection = MongoClient(uri, server_api=ServerApi('1'))
     blog_conection = conection.blog
     users = blog_conection.users
     response = users.find_one({'user': user})
@@ -118,10 +128,13 @@ def editar_articulo(user,old_title,new_title,text,tags,categories):
                 article['categories'] = categories.split(',')
                 break
         else:
-            print("No se encontró el artículo con el título especificado.")
+            conection.close()
+            return "No se encontro el articulo con ese titulo"
     else:
-        print(f"El usuario {user} no tiene artículos.")
+        conection.close()
+        return f"El usuario {user} no tiene artículos."
 
     users.update_one({'user': user}, {'$set': response})
-    return
+    conection.close()
+    return "Articulo actualizado"
     

@@ -1,6 +1,5 @@
 import streamlit as st
 import articles_crud as artcrud
-import comments_crud as commcrud
 
 st.title('Articulos')
 number_of_articles = len(artcrud.get_all_articles())

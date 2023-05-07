@@ -1,7 +1,11 @@
-import pymongo as mongo
+import streamlit as st
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+uri = st.secrets["DB_MONGO_URI"]
 
 def find_articles_by_tag(tag):
-    connection = mongo.MongoClient("mongodb://localhost:27017")
+    connection = MongoClient(uri,server_api=ServerApi('1'))
     blog_connection = connection.blog
     users = blog_connection.users
     all_users = users.find()
@@ -15,4 +19,5 @@ def find_articles_by_tag(tag):
                 article["username"] = username
                 articles_with_tag.append(article)
 
+    connection.close()
     return articles_with_tag
