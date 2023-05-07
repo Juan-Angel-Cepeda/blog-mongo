@@ -23,7 +23,7 @@ st.markdown("## Por Juan Angel Cepeda Fernandez")
 st.markdown("### Para Bases de Datos Avanzadas")
 st.markdown("""# Guía para usar el blog
 ## Registrarse
-1. Dirígete a la pestaña **Registrarse**.
+1. Dirígete a la pestaña **Usuarios**.
 2. Ingresa tu nombre de usuario y contraseña.
 ## Publicar un artículo
 
